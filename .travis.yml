@@ -1,3 +1,10 @@
+--- 
 language: node_js
-node_js:
-    - "0.10"
+notifications: 
+  hipchat: 
+  - secure: |-
+      aph1PuW2SSflzJVDehJgM/rxi7b5Y5w2YjnMHb2BvXeIwUTdzDT03A+zBscQ
+      s4GTrpYL0G1h5s2CpAPOsqZEK0Fyt+RKrdungxquAVjsuGdX/axFeoXvNjBL
+      gofMZNRvA031PLBxz/1kpORz0Vf46V7t0EPe9/7lzBWmAwU/VG4=
+node_js: 
+- "0.8"
