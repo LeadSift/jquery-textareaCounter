@@ -8,20 +8,27 @@ Config Options
 --------------
 
 +-------------------+-----------------------------------------------------------+
-|Options            | Description                                               |
+| Options           | Description                                               |
 +-------------------+-----------------------------------------------------------+ 
 | maxCharacterSize  | Define the maximum number of characters. Default is -1.   |
 |                   | Limit characters only when maxCharacterSize > 0           |
 |                   | default: -1                                               |
 +-------------------+-----------------------------------------------------------+ 
+| truncate          | Truncate the chars if maxCharachterSize exceeded          |
+|                   | default: true                                             |
++-------------------+-----------------------------------------------------------+ 
 | originalStyle     | Set original class style                                  |
-|                   | 'originalTextareaInfo''                                   |
+|                   | default: 'originalTextareaInfo'                           |
 +-------------------+-----------------------------------------------------------+ 
 | warningStyle      | Set warning class style                                   |
 |                   | If number of characters of user input is over the warning |
-|                   | default 'warningTextareaInfo'                             |
+|                   | default: 'warningTextareaInfo'                            |
 +-------------------+-----------------------------------------------------------+ 
-| warningNumber     | number, the information style will be changed to warning  |
+| errorStyle        | Set error class style, triggers if truncate is false      |
+|                   | and there are more than max chars in the text area        |
+|                   | default: 'errorTextareaInfo'                              |
++-------------------+-----------------------------------------------------------+ 
+| warningNumber     | char remaining before warningStyle is applied             |
 |                   | default: 20                                               |
 +-------------------+-----------------------------------------------------------+ 
 | displayFormat     | keywords: #input, #max, #left, #words.                    |

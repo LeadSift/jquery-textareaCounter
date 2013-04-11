@@ -1,0 +1,103 @@
+<html>
+	<head>
+		<title>Textarea Characters, Words Counter and Characters Limitation</title>
+		<style>
+			body {
+				font-size: 12px;
+				font-family: Arial, Helvetica, sans-serif;
+				line-height: 20px;
+				color: #333333;
+			}
+			
+			a {
+				color: #333333;
+				text-decoration: none;
+			}
+			
+			.originalTextareaInfo {
+				font-size: 12px;
+				color: #000000;
+				font-family: Tahoma, sans-serif;
+				text-align: right
+			}
+			
+			.warningTextareaInfo {
+				font-size: 12px;
+				color: #AAAA00;
+				font-family: Tahoma, sans-serif;
+				text-align: right
+			}
+
+			.errorTextareaInfo {
+				font-size: 12px;
+				color: #AA0000;
+				font-family: Tahoma, sans-serif;
+				text-align: right
+			}
+			
+			#showData {
+				height: 70px;
+				width: 200px;
+				border: 1px solid #CCCCCC;
+				padding: 10px;
+				margin: 10px;
+			}
+		</style>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
+		<script src="../jquery.textareaCounter.plugin.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			var info;
+			$(document).ready(function(){
+				var options = {
+					'maxCharacterSize': -2,
+					'originalStyle': 'originalTextareaInfo',
+					'warningStyle' : 'warningTextareaInfo',
+					'warningNumber': 40
+				};
+				$('#testTextarea').textareaCount(options);
+
+				var options2 = {
+						'maxCharacterSize': 200,
+						'originalStyle': 'originalTextareaInfo',
+						'warningStyle' : 'warningTextareaInfo',
+						'warningNumber': 40,
+						'displayFormat' : '#input/#max | #words words'
+				};
+				$('#testTextarea2').textareaCount(options2);
+
+				var options3 = {
+						'maxCharacterSize': 200,
+						'originalStyle': 'originalTextareaInfo',
+						'warningStyle' : 'warningTextareaInfo',
+						'warningNumber': 40,
+						'displayFormat' : '#left Characters Left / #max'
+				};
+				$('#testTextarea3').textareaCount(options3, function(data){
+					$('#showData').html(data.input + " characters input. <br />" + data.left + " characters left. <br />" + data.max + " max characters. <br />" + data.words + " words input.");
+				});
+
+        $('#testTweet').textareaCount({
+          'maxCharacterSize': 140,
+          'truncate': false,
+          'warningNumber': 30,
+          'displayFormat': '#input Characters | #left Characters Left | #words Words'
+        }); 
+			});
+		</script>
+	</head>
+	<body>
+		<h1>
+			 jQuery textareaCounter Plugin
+		</h1>
+		<h2>Count and limit characters tweet style</h2>
+		<textarea id="testTweet" cols="70" rows="10"></textarea>
+		<h2>Only Count characters and words</h2>
+		<textarea id="testTextarea" cols="70" rows="10"></textarea>
+		<h2>Count and limit characters, format the defined format display information</h2>
+		<textarea id="testTextarea2" cols="70" rows="10"></textarea>
+		<h2>Count and limit characters and use the callback function</h2>
+		<div id="showData"></div>
+		<textarea id="testTextarea3" cols="70" rows="10"></textarea>
+		
+	</body>
+</html>

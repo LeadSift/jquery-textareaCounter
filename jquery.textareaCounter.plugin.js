@@ -13,8 +13,10 @@
   $.fn.textareaCount = function(options, fn) {
     var defaults = {
         maxCharacterSize: -1,
+        truncate: true,
         originalStyle: 'originalTextareaInfo',
         warningStyle: 'warningTextareaInfo',
+        errorStyle: 'errorTextareaInfo',
         warningNumber: 20,
         displayFormat: '#input characters | #words words'
       }
@@ -98,10 +100,11 @@
         , originalScrollTopPosition
         ;
 
-      //Start Cut
+      // Start Cut
       if(options.maxCharacterSize > 0){
-        //If copied content is already more than maxCharacterSize, chop it to maxCharacterSize.
-        if(contentLength >= options.maxCharacterSize) {
+        // If copied content is already more than maxCharacterSize,
+        // chop it to maxCharacterSize only if truncate is true
+        if(options.truncate && contentLength >= options.maxCharacterSize) {
           content = content.substring(0, options.maxCharacterSize);
         }
 
@@ -112,15 +115,18 @@
         if (!isWin()){
           systemmaxCharacterSize = options.maxCharacterSize;
         }
-        if(contentLength > systemmaxCharacterSize){
+        if(options.truncate && contentLength > systemmaxCharacterSize){
           //avoid scroll bar moving
           originalScrollTopPosition = this.scrollTop;
           container.val(content.substring(0, systemmaxCharacterSize));
           this.scrollTop = originalScrollTopPosition;
         }
-        charLeftInfo.removeClass(options.warningStyle);
+        charLeftInfo.removeClass(options.warningStyle + ' ' + options.errorStyle);
         if(systemmaxCharacterSize - contentLength <= options.warningNumber){
           charLeftInfo.addClass(options.warningStyle);
+        }
+        if(systemmaxCharacterSize - contentLength <= 0){
+          charLeftInfo.addClass(options.errorStyle);
         }
 
         numInput = container.val().length + newlineCount;
