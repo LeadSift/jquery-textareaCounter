@@ -22,11 +22,12 @@ Config Options
 +-------------------+-----------------------------------------------------------+ 
 | displayFormat     | keywords: #input, #max, #left, #words.                    |
 |                   |                                                           |
-|                   | #input: current number of input chars                     |
-|                   | #max: represents your predefined max                      |
-|                   | #left: #max - #input                                      |
-|                   | #words: represents your current number of words           |
-|                   | e.g. '#input characters and #words words'                 |
+|                   | * #input: current number of input chars                   |
+|                   | * #max: represents your predefined max                    |
+|                   | * #left: #max - #input                                    |
+|                   | * #words: represents your current number of words         |
+|                   |                                                           |
+|                   | e.g. '#input characters and #words words', note:          |
 |                   | #max and #left does work only when maxCharacterSize > 0   |
 +-------------------+-----------------------------------------------------------+ 
 
