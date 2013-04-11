@@ -1,0 +1,27 @@
+{
+  "name": "jquery.textareaCounter.plugin",
+  "title": "jQuery TextArea Counter Plugin",
+  "description": "",
+  "version": "3.0.0",
+  "homepage": "https://github.com/LeadSift/jquery-textareaCounter",
+  "author": {
+    "name": "LeadSift",
+    "email": "hello@leadsift.com",
+    "url": "http://leadsift.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/LeadSift/jquery-textareaCounter.git"
+  },
+  "bugs": "https://github.com/LeadSift/jquery-textareaCounter/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/LeadSift/jquery-textareaCounter/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "keywords": []
+}
