@@ -8,4 +8,4 @@ usage:
 	@echo "    compile    : not implemented yet"
 
 test: jquery.textareaCounter.plugin.js
-	jslint $<
+	jshint $<

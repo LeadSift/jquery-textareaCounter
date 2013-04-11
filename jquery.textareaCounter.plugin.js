@@ -6,7 +6,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Requires: jQuery v1.4.2 or later
  */
-/*jslint regexp: true, sloppy: true, browser: true, white: true, indent: 2, nomen: true, plusplus: true */
+/*jslint regexp: true, laxcomma: true, browser: true, white: true, indent: 2, nomen: true, plusplus: true */
 /*global $, jQuery
 */
 (function($) {
@@ -65,7 +65,7 @@
     }
 
     function getNextCharLeftInformation(container){
-        return container.next('.charleft');
+      return container.next('.charleft');
     }
 
     function isWin(){
