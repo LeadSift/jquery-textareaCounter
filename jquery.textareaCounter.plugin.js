@@ -6,9 +6,6 @@
  * http://www.opensource.org/licenses/mit-license.php
  * Requires: jQuery v1.4.2 or later
  */
-/*jslint regexp: true, laxcomma: true, browser: true, white: true, indent: 2, nomen: true, plusplus: true */
-/*global $, jQuery
-*/
 (function($) {
   $.fn.textareaCount = function(options, fn) {
     var defaults = {
@@ -34,7 +31,7 @@
     function getNewlineCount(content){
       var newlineCount = 0
         , i;
-      for(i=0; i<content.length;i++){
+      for(i=0; i<content.length; i++){
         if(content.charAt(i) === '\n'){
           newlineCount++;
         }
@@ -165,8 +162,8 @@
     charLeftInfo.addClass(options.originalStyle);
     charLeftInfo.css(charLeftCss);
 
-    container.bind('keyup', function(event){limitTextAreaByCharacterCount();})
-     .bind('mouseover', function(event){setTimeout(function(){limitTextAreaByCharacterCount();}, 10);})
-     .bind('paste', function(event){setTimeout(function(){limitTextAreaByCharacterCount();}, 10);});
+    container.bind('keyup', function(){limitTextAreaByCharacterCount();})
+     .bind('mouseover', function(){setTimeout(function(){limitTextAreaByCharacterCount();}, 10);})
+     .bind('paste', function(){setTimeout(function(){limitTextAreaByCharacterCount();}, 10);});
   };
-}(jQuery));
+})(jQuery);
