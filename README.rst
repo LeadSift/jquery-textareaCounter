@@ -10,15 +10,19 @@ Config Options
 +-------------------+-----------------------------------------------------------+
 |Options            | Description                                               |
 +-------------------+-----------------------------------------------------------+ 
-| maxCharacterSize  |Define the maximum number of characters. Default is -1.    |
-|                   |Limit characters only when maxCharacterSize > 0            |
+| maxCharacterSize  | Define the maximum number of characters. Default is -1.   |
+|                   | Limit characters only when maxCharacterSize > 0           |
+|                   | default: -1                                               |
 +-------------------+-----------------------------------------------------------+ 
 | originalStyle     | Set original class style                                  |
+|                   | 'originalTextareaInfo''                                   |
 +-------------------+-----------------------------------------------------------+ 
 | warningStyle      | Set warning class style                                   |
 |                   | If number of characters of user input is over the warning |
+|                   | default 'warningTextareaInfo'                             |
 +-------------------+-----------------------------------------------------------+ 
 | warningNumber     | number, the information style will be changed to warning  |
+|                   | default: 20                                               |
 +-------------------+-----------------------------------------------------------+ 
 | displayFormat     | keywords: #input, #max, #left, #words.                    |
 |                   |                                                           |
@@ -27,7 +31,7 @@ Config Options
 |                   | * #left: #max - #input                                    |
 |                   | * #words: represents your current number of words         |
 |                   |                                                           |
-|                   | e.g. '#input characters and #words words', note:          |
+|                   | default: '#input characters and #words words', note:      |
 |                   | #max and #left does work only when maxCharacterSize > 0   |
 +-------------------+-----------------------------------------------------------+ 
 
