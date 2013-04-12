@@ -19,9 +19,6 @@
       , displayFormat: '#input characters | #words words'
       }
       , container = $(this)
-      , charLeftCss = {
-        'width' : container.width()
-      }
       , charLeftInfo
       , numInput = 0
       , maxCharacters = options.maxCharacterSize
@@ -184,7 +181,6 @@
     $("<div class='charleft'>&nbsp;</div>").insertAfter(container);
     charLeftInfo = getNextCharLeftInformation(container);
     charLeftInfo.addClass(options.originalStyle);
-    charLeftInfo.css(charLeftCss);
 
     container.bind('keyup', function(){limitTextAreaByCharacterCount();})
      .bind('mouseover', function(){setTimeout(function(){limitTextAreaByCharacterCount();}, 10);})
