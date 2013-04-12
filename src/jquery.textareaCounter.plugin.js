@@ -9,13 +9,14 @@
 (function($) {
   $.fn.textareaCount = function(options, fn) {
     var defaults = {
-        maxCharacterSize: -1,
-        truncate: true,
-        originalStyle: 'originalTextareaInfo',
-        warningStyle: 'warningTextareaInfo',
-        errorStyle: 'errorTextareaInfo',
-        warningNumber: 20,
-        displayFormat: '#input characters | #words words'
+        maxCharacterSize: -1
+      , truncate: true
+      , charCounter: 'standard'
+      , originalStyle: 'originalTextareaInfo'
+      , warningStyle: 'warningTextareaInfo'
+      , errorStyle: 'errorTextareaInfo'
+      , warningNumber: 20
+      , displayFormat: '#input characters | #words words'
       }
       , container = $(this)
       , charLeftCss = {
@@ -26,7 +27,29 @@
       , maxCharacters = options.maxCharacterSize
       , numLeft = 0
       , numWords = 0
+      , charCounters = {}
       ;
+
+    charCounters.standard = function(content){
+      return content.length;
+    };
+
+    charCounters.twitter = function(content){
+      // function that counts urls as 22 chars
+      // regex to match various urls ... from http://stackoverflow.com/a/6427654
+      var url_length = 22
+        , replacement = Array(url_length+1).join("*")
+        , regex_str = "(https?:\/\/)?" + // SCHEME
+          "([a-z0-9+!*(),;?&=$_.-]+(:[a-z0-9+!*(),;?&=$_.-]+)?@)?" + // User and Pass
+          "([a-z0-9-.]*)\\.(travel|museum|[a-z]{2,4})" + // Host or IP
+          "(:[0-9]{2,5})?" + // Port
+          "(\/([a-z0-9+$_-]\\.?)+)*\/?" + // Path
+          "(\\?[a-z+&$_.-][a-z0-9;:@&%=+\/$_.-]*)?" + // GET Query
+          "(#[a-z_.-][a-z0-9+$_.-]*)?" // Anchor
+        , regex = new RegExp(regex_str, 'gi')
+        ;
+      return content.replace(regex, replacement).length;
+    };
 
     function getNewlineCount(content){
       var newlineCount = 0
@@ -91,7 +114,8 @@
 
     function countByCharacters(){
       var content = container.val()
-        , contentLength = content.length
+        , lengthFunc = typeof(options.charCounter) === 'function'? options.charCounter : charCounters[options.charCounter]
+        , contentLength = lengthFunc(content)
         , newlineCount
         , systemmaxCharacterSize
         , originalScrollTopPosition
@@ -126,9 +150,9 @@
           charLeftInfo.addClass(options.errorStyle);
         }
 
-        numInput = container.val().length + newlineCount;
+        numInput = contentLength + newlineCount;
         if(!isWin()){
-          numInput = container.val().length;
+          numInput = contentLength;
         }
 
         numWords = countWord(getCleanedWordString(container.val()));
@@ -137,9 +161,9 @@
       } else {
         //normal count, no cut
         newlineCount = getNewlineCount(content);
-        numInput = container.val().length + newlineCount;
+        numInput = contentLength + newlineCount;
         if(!isWin()){
-          numInput = container.val().length;
+          numInput = contentLength;
         }
         numWords = countWord(getCleanedWordString(container.val()));
       }
