@@ -1,5 +1,6 @@
 {
   "curly": true,
+  "laxcomma": true,
   "eqeqeq": true,
   "immed": true,
   "latedef": true,
