@@ -1,6 +1,9 @@
 jQuery TextareaCounter
 ======================
 
+.. image:: https://travis-ci.org/LeadSift/jquery-textareaCounter.png
+   :target: https://travis-ci.org/LeadSift/jquery-textareaCounter
+
 Forked from http://roy-jin.appspot.com/jsp/textareaCounter.jsp 
 
 
