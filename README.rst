@@ -7,6 +7,12 @@ jQuery TextareaCounter
 Forked from http://roy-jin.appspot.com/jsp/textareaCounter.jsp 
 
 
+Examples
+--------
+
+Examples of usage can be seen in `example/index.html <example/index.html>`_.
+
+
 Config Options
 --------------
 
