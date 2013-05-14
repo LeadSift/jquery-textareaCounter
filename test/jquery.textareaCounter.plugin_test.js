@@ -1,3 +1,4 @@
+/*global navigator:true */
 (function($) {
   /*
     ======== A Handy Little QUnit Reference ========
@@ -207,7 +208,7 @@
     // This will run before each test in this module.
     setup: function() {
       var __originalNavigator = navigator;
-      navigator = new Object();
+      navigator = {};
       navigator.__proto__ = __originalNavigator;
       navigator.__defineGetter__('appVersion', function(){
         return 'win';

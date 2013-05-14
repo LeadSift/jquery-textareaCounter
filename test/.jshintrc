@@ -12,6 +12,7 @@
   "boss": true,
   "eqnull": true,
   "browser": true,
+  "proto": true,
   "predef": [
     "jQuery",
     "QUnit",
