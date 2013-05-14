@@ -128,10 +128,10 @@
 
         newlineCount = getNewlineCount(content);
 
-        // newlineCount new line character. For windows, it occupies 2 characters
-        systemmaxCharacterSize = options.maxCharacterSize - newlineCount;
-        if (!isWin()){
-          systemmaxCharacterSize = options.maxCharacterSize;
+        systemmaxCharacterSize = options.maxCharacterSize;
+        if (isWin()){
+          // newlineCount new line character. For windows, it occupies 2 characters
+          systemmaxCharacterSize = options.maxCharacterSize - newlineCount;
         }
         if(options.truncate && contentLength > systemmaxCharacterSize){
           //avoid scroll bar moving
@@ -147,9 +147,9 @@
           charLeftInfo.addClass(options.errorStyle);
         }
 
-        numInput = contentLength + newlineCount;
-        if(!isWin()){
-          numInput = contentLength;
+        numInput = contentLength;
+        if(isWin()){
+          numInput = contentLength + newlineCount;
         }
 
         numWords = countWord(getCleanedWordString(container.val()));
@@ -158,9 +158,9 @@
       } else {
         //normal count, no cut
         newlineCount = getNewlineCount(content);
-        numInput = contentLength + newlineCount;
-        if(!isWin()){
-          numInput = contentLength;
+        numInput = contentLength;
+        if(isWin()){
+          numInput = contentLength + newlineCount;
         }
         numWords = countWord(getCleanedWordString(container.val()));
       }
@@ -182,8 +182,12 @@
     charLeftInfo = getNextCharLeftInformation(container);
     charLeftInfo.addClass(options.originalStyle);
 
-    container.bind('keyup', function(){limitTextAreaByCharacterCount();})
-     .bind('mouseover', function(){setTimeout(function(){limitTextAreaByCharacterCount();}, 10);})
-     .bind('paste', function(){setTimeout(function(){limitTextAreaByCharacterCount();}, 10);});
+    container.bind('keyup', function(){
+      limitTextAreaByCharacterCount();}
+    ).bind('mouseover paste', function(){
+      setTimeout(function(){
+        limitTextAreaByCharacterCount();
+      }, 10);
+   });
   };
 })(jQuery);

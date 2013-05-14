@@ -36,6 +36,35 @@
     strictEqual($('.charleft').length, 1);
   });
 
+  asyncTest('mouseover triggers refresh', function() {
+    // mouseover triggers use setTimeout so we need to wait
+    var $t = this.$textarea;
+    expect(1);
+    $t.textareaCount({
+      maxCharacterSize: 5,
+      truncate: true
+    });
+    $t.val('1234567890').mouseover();
+    setTimeout(function(){
+      start();
+      strictEqual($t.val().length, 5);
+    }, 15);
+  });
+
+  asyncTest('paste triggers refresh', function() {
+    var $t = this.$textarea;
+    expect(1);
+    $t.textareaCount({
+      maxCharacterSize: 5,
+      truncate: true
+    });
+    $t.val('1234567890').trigger('paste');
+    setTimeout(function(){
+      start();
+      strictEqual($t.val().length, 5);
+    }, 15);
+  });
+
   test('truncate over max chars', function() {
     expect(1);
     this.$textarea.textareaCount({
@@ -228,6 +257,16 @@
     strictEqual($('.charleft').text(), '2,8');
   });
 
+  test('win: char counter no max', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 0,
+      charCounter: 'standard',
+      'displayFormat': '#input'
+    });
+    this.$textarea.val('123\n').keyup();
+    strictEqual($('.charleft').text(), '5');
+  });
 
   module('TwitterStyleTestCase', {
     setup: function() {
