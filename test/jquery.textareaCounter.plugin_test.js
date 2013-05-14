@@ -66,6 +66,17 @@
     strictEqual($('.charleft').text(), '10,0');
   });
 
+  test('newlines count normally', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 10,
+      charCounter: 'standard',
+      'displayFormat': '#input,#left'
+    });
+    this.$textarea.val('\n').keyup();
+    strictEqual($('.charleft').text(), '1,9');
+  });
+
   test('custom char counter', function() {
     expect(1);
     this.$textarea.textareaCount({
