@@ -203,6 +203,31 @@
     this.$textarea.val('1234567890').keyup();
   });
 
+  module('WinTestCase', {
+    // This will run before each test in this module.
+    setup: function() {
+      var __originalNavigator = navigator;
+      navigator = new Object();
+      navigator.__proto__ = __originalNavigator;
+      navigator.__defineGetter__('appVersion', function(){
+        return 'win';
+      });
+      this.$textarea = $('textarea');
+    }
+  });
+ 
+  test('win: newlines count double since they send \\r', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 10,
+      charCounter: 'standard',
+      'displayFormat': '#input,#left'
+    });
+    this.$textarea.val('\n').keyup();
+    strictEqual($('.charleft').text(), '2,8');
+  });
+
+
   module('TwitterStyleTestCase', {
     setup: function() {
       this.$textarea = $('textarea');
