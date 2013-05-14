@@ -88,6 +88,17 @@
     this.$textarea.val('1234567890').keyup();
   });
 
+  test('char counter no max', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 0,
+      charCounter: 'standard',
+      'displayFormat': '#input'
+    });
+    this.$textarea.val('123').keyup();
+    strictEqual($('.charleft').text(), '3');
+  });
+
   test('warningStyle is not shown if no warning', function() {
     expect(1);
     this.$textarea.textareaCount({
