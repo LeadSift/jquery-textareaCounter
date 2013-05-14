@@ -7,6 +7,12 @@ jQuery TextareaCounter
 Forked from http://roy-jin.appspot.com/jsp/textareaCounter.jsp 
 
 
+Examples
+--------
+
+Examples of usage can be seen in `example/index.html <example/index.html>`_.
+
+
 Config Options
 --------------
 
@@ -44,6 +50,21 @@ Config Options
 |                   | default: '#input characters and #words words', note:      |
 |                   | #max and #left does work only when maxCharacterSize > 0   |
 +-------------------+-----------------------------------------------------------+ 
+| charCounter       | a function or string naming a builtin charCounter func    |
+|                   | that will be used to count characters ... the func should |
+|                   | accept a single parameter which is the content string.    |
+|                   |                                                           |
+|                   | the current builtins are:                                 |
+|                   |                                                           |
+|                   | 'twitter'                                                 |
+|                   |     counts each url in the input as 22 chars              |
+|                   |                                                           |
+|                   | 'standard'                                                |
+|                   |     standard content.length count                         |
+|                   |                                                           |
+|                   | default: 'standard'                                       |
++-------------------+-----------------------------------------------------------+ 
+
 
 Display Callback
 ----------------

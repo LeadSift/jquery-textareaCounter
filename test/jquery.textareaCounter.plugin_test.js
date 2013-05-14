@@ -36,12 +36,149 @@
   });
 
   test('truncate over max chars', function() {
+    expect(1);
     this.$textarea.textareaCount({
       maxCharacterSize: 5,
       truncate: true
     });
     this.$textarea.val('1234567890').keyup();
     strictEqual(this.$textarea.val().length, 5);
+  });
+
+  test('does not truncate if false', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 5,
+      truncate: false
+    });
+    this.$textarea.val('1234567890').keyup();
+    strictEqual(this.$textarea.val().length, 10);
+  });
+
+  test('standard char counter', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 10,
+      charCounter: 'standard',
+      'displayFormat': '#input,#left'
+    });
+    this.$textarea.val('1234567890').keyup();
+    strictEqual($('.charleft').text(), '10,0');
+  });
+
+  test('custom char counter', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 10,
+      charCounter: function(content){
+        strictEqual(content, '1234567890');
+      }
+    });
+    this.$textarea.val('1234567890').keyup();
+  });
+
+  test('warningStyle is not shown if no warning', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 10,
+      warningNumber: 5,
+      warningStyle: 'custom-warning'
+    });
+    this.$textarea.val('1').keyup();
+    ok(!$('.charleft').hasClass('custom-warning'));
+  });
+
+  test('warningStyle is shown if warning', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 10,
+      warningNumber: 5,
+      warningStyle: 'custom-warning'
+    });
+    this.$textarea.val('12345').keyup();
+    ok($('.charleft').hasClass('custom-warning'));
+  });
+
+  test('warningStyle hidden if was shown previously', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 10,
+      warningNumber: 5,
+      warningStyle: 'custom-warning'
+    });
+    this.$textarea.val('12345').keyup();
+    this.$textarea.val('1234').keyup();
+    ok(!$('.charleft').hasClass('custom-warning'));
+  });
+
+
+  test('errorStyle is shown if no truncate and over', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 5,
+      truncate: false,
+      errorStyle: 'custom-error'
+    });
+    this.$textarea.val('12345').keyup();
+    ok($('.charleft').hasClass('custom-error'));
+  });
+
+  test('errorStyle removed if was shown', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 5,
+      truncate: false,
+      errorStyle: 'custom-error'
+    });
+    this.$textarea.val('12345').keyup();
+    this.$textarea.val('1234').keyup();
+    ok(!$('.charleft').hasClass('custom-error'));
+  });
+
+  test('originalStyle always shown', function() {
+    expect(3);
+    this.$textarea.textareaCount({
+      maxCharacterSize: 10,
+      warningNumber: 5,
+      truncate: false,
+      originalStyle: 'orig'
+    });
+    this.$textarea.val('1').keyup();
+    ok($('.charleft').hasClass('orig'));
+    this.$textarea.val('12345').keyup();
+    ok($('.charleft').hasClass('orig'));
+    this.$textarea.val('1234567890').keyup();
+    ok($('.charleft').hasClass('orig'));
+  });
+
+  test('displayFormat displays all documented numbers', function() {
+    expect(3);
+    this.$textarea.textareaCount({
+      'maxCharacterSize': 10,
+      'truncate': false,
+      'displayFormat': '#input,#max,#left,#words'
+    });
+    this.$textarea.val('123').keyup();
+    strictEqual($('.charleft').text(), '3,10,7,1');
+    this.$textarea.val('123 567 ').keyup();
+    strictEqual($('.charleft').text(), '8,10,2,2');
+    this.$textarea.val('123 567 901').keyup();
+    strictEqual($('.charleft').text(), '11,10,-1,3');
+  });
+
+  test('display Callback called', function() {
+    expect(1);
+    this.$textarea.textareaCount({
+      'maxCharacterSize': 10
+    }, function(data){
+      deepEqual(data, {
+        input: 10,
+        words: 1,
+        left: 0,
+        max: 10
+      });
+    });
+    this.$textarea.val('1234567890').keyup();
   });
 
   module('TwitterStyleTestCase', {
@@ -52,7 +189,7 @@
         'truncate': false,
         'charCounter': 'twitter',
         'warningNumber': 30,
-        'displayFormat': '#input\/#left'
+        'displayFormat': '#input,#left'
       });
       this.$charleft = $('.charleft');
     }
@@ -61,70 +198,70 @@
   test('No WWW or HTTP URLs counted as 22 chars', function() {
     expect(2);
     this.$textarea.val('s.xxx').keyup();
-    strictEqual(this.$charleft.text(), "22\/118");
+    strictEqual(this.$charleft.text(), "22,118");
     this.$textarea.val('s.xxx s.xxx').keyup();
-    strictEqual(this.$charleft.text(), "45\/95");
+    strictEqual(this.$charleft.text(), "45,95");
   });
 
   test('Long urls counted as 22 chars', function() {
     var url = 'http://www.leadsift.com/happy-1st-birthday-leadsift/and-some-extra-spam/and-some-extra-spam/';
     expect(2);
     this.$textarea.val(url).keyup();
-    strictEqual(this.$charleft.text(), "22\/118");
+    strictEqual(this.$charleft.text(), "22,118");
     this.$textarea.val(url + ' ' + url).keyup();
-    strictEqual(this.$charleft.text(), "45\/95");
+    strictEqual(this.$charleft.text(), "45,95");
   });
 
   test('MiXeD case urls counted as 22 chars', function() {
     var url = 'wWw.LeadSift.com/happy-1st-birthday-leadsift/And-More-Mixed';
     expect(2);
     this.$textarea.val(url).keyup();
-    strictEqual(this.$charleft.text(), "22\/118");
+    strictEqual(this.$charleft.text(), "22,118");
     this.$textarea.val(url + ' ' + url).keyup();
-    strictEqual(this.$charleft.text(), "45\/95");
+    strictEqual(this.$charleft.text(), "45,95");
   });
 
   test('WWW urls counted as 22 chars', function() {
     var url = 'wWw.LeadSift.com';
     expect(2);
     this.$textarea.val(url).keyup();
-    strictEqual(this.$charleft.text(), "22\/118");
+    strictEqual(this.$charleft.text(), "22,118");
     this.$textarea.val(url + ' ' + url).keyup();
-    strictEqual(this.$charleft.text(), "45\/95");
+    strictEqual(this.$charleft.text(), "45,95");
   });
 
   test('http urls counted as 22 chars', function() {
     var url = 'HTTP://LeadSift.com';
     expect(2);
     this.$textarea.val(url).keyup();
-    strictEqual(this.$charleft.text(), "22\/118");
+    strictEqual(this.$charleft.text(), "22,118");
     this.$textarea.val(url + ' ' + url).keyup();
-    strictEqual(this.$charleft.text(), "45\/95");
+    strictEqual(this.$charleft.text(), "45,95");
   });
 
   test('http urls counted as 22 chars', function() {
     var url = 'HTTP://LeadSift.com';
     expect(2);
     this.$textarea.val(url).keyup();
-    strictEqual(this.$charleft.text(), "22\/118");
+    strictEqual(this.$charleft.text(), "22,118");
     this.$textarea.val(url + ' ' + url).keyup();
-    strictEqual(this.$charleft.text(), "45\/95");
+    strictEqual(this.$charleft.text(), "45,95");
   });
 
   test('Min two letter tld to count', function() {
     var url = 'http://lx.t';
     expect(2);
     this.$textarea.val(url).keyup();
-    strictEqual(this.$charleft.text(), "11\/129");
+    strictEqual(this.$charleft.text(), "11,129");
     this.$textarea.val(url + ' ' + url).keyup();
-    strictEqual(this.$charleft.text(), "23\/117");
+    strictEqual(this.$charleft.text(), "23,117");
   });
 
   test('Extra chars are counted', function() {
     var url = 'Xhttp://lx.tl';
     expect(1);
     this.$textarea.val(url).keyup();
-    strictEqual(this.$charleft.text(), "23\/117");
+    strictEqual(this.$charleft.text(), "23,117");
   });
 
   test('test all gltds without http or www are counted', function() {
@@ -136,7 +273,7 @@
     gtlds.forEach(function(tld){
       var url = url_base + tld;
       _this.$textarea.val(url).keyup();
-      strictEqual(_this.$charleft.text(), "22\/118", "testing gtld "+tld);
+      strictEqual(_this.$charleft.text(), "22,118", "testing gtld "+tld);
     });
   });
 
@@ -148,7 +285,7 @@
     gtlds.forEach(function(tld){
       var url = url_base + tld;
       _this.$textarea.val(url).keyup();
-      strictEqual(_this.$charleft.text(), "22\/118", "testing gtld "+tld);
+      strictEqual(_this.$charleft.text(), "22,118", "testing gtld "+tld);
     });
   });
 
